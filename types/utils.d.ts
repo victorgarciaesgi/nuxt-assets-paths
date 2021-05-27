@@ -1,1 +1,1 @@
-export declare function processAssetDir(dir: string, parent: string, outObject: string, extension?: string): Promise<string>;
+export declare function processAssetDir(dir: string, parent: string, outObject: string, interfaceType: string, extension?: string): Promise<string>;

@@ -18,10 +18,10 @@ Typescript is recommanded for this module usage
 # Installation
 
 ```bash
-yarn add nuxt-assets-paths
+yarn add -D nuxt-assets-paths
 
 #or
-npm install nuxt-assets-paths
+npm install -D nuxt-assets-paths
 ```
 
 # Configuration
@@ -76,7 +76,7 @@ export interface NuxtAssetsPathsOptions {
 
 ## - `assetsPaths` global object
 
-The module will create a file with the global object of the route names inside.
+At build , the module will create a file with the global object of the assets paths inside.
 
 ### _Usage_
 
@@ -109,6 +109,12 @@ export const assetsPaths = {
     flower: '~assets/images/flower.webp',
   },
 };
+export type AssetsPaths =
+  | '~assets/icons/actions/done.png'
+  | '~assets/icons/actions/done.svg'
+  | '~assets/icons/home.svg'
+  | '~assets/images/background.svg'
+  | '~assets/images/flower.webp';
 ```
 
 You can now just import it
@@ -127,6 +133,20 @@ export default {
     assetsPaths,
   }),
 };
+```
+
+And type your component props (Volar recommanded in VSCode)
+
+```ts
+import { Proptype } from 'vue';
+import { AssetsPaths } from '...yourPath/__assetsPaths';
+
+export default defineComponent({
+  name: 'Image',
+  props: {
+    src: { type: String as PropType<AssetsPaths> },
+  },
+});
 ```
 
 ## Advanced usage (for Typescript users)

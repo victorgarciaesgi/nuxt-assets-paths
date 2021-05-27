@@ -1,4 +1,4 @@
-import path, { resolve } from 'path';
+import { resolve } from 'path';
 import { promises } from 'fs';
 import { camelCase } from 'lodash';
 
@@ -19,8 +19,11 @@ export async function processAssetDir(
   dir: string,
   parent: string,
   outObject: string,
+  interfaceType: string,
   extension?: string
 ) {
+  const isTs = extension === 'ts';
+
   async function* getFiles(dir: string, parent: string): any {
     const dirents = await promises.readdir(dir, { withFileTypes: true });
     const filesInDirectory = dirents
@@ -35,7 +38,8 @@ export async function processAssetDir(
       const res = resolve(dir, dirent.name);
       if (dirent.isDirectory()) {
         outObject += `${dirent.name}: {`;
-        yield* getFiles(res, `${parent}${dirent.name}/`);
+        const assetPath = `${parent}${dirent.name}/`;
+        yield* getFiles(res, assetPath);
         outObject += '},';
       } else {
         if (fileRegxp.exec(dirent.name)) {
@@ -46,7 +50,9 @@ export async function processAssetDir(
             if (filesInDirectory.filter((f) => f.fileName === fileName).length > 1) {
               formatedFileName = `${formatedFileName}_${ext}`;
             }
-            outObject += `${formatedFileName}: "${parent}${dirent.name}",`;
+            const assetPath = `${parent}${dirent.name}`;
+            outObject += `${formatedFileName}: "${assetPath}",`;
+            if (isTs) interfaceType += `| "${assetPath}"`;
           }
         }
         yield res;
@@ -54,9 +60,10 @@ export async function processAssetDir(
     }
   }
 
-  for await (const f of getFiles(dir, '~assets/')) {
+  for await (const f of getFiles(dir, parent)) {
   }
-  outObject += `} ${extension === 'ts' ? 'as const' : ''}`;
+  outObject += `} ${isTs ? 'as const' : ''}`;
+  outObject += `\n\n ${interfaceType}`;
 
   return outObject;
 }

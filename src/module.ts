@@ -1,5 +1,6 @@
 import { Module } from '@nuxt/types';
 import chalk from 'chalk';
+import { capitalize } from 'lodash';
 import path from 'path';
 import { saveFile } from './save';
 import { NuxtAssetsPathsOptions } from './types';
@@ -13,21 +14,33 @@ const assetsPathsModule: Module<NuxtAssetsPathsOptions> = function (moduleOption
       staticPaths = false,
     }: NuxtAssetsPathsOptions = { ...this.options.assetsPaths, ...moduleOptions };
 
-    const iconFolderPath = path.resolve(process.cwd(), `${this.options.srcDir}/assets/`);
-    console.log(iconFolderPath);
-
-    let outObject = `const ${pathsObjectName} = {`;
+    const assetsFolderPath = path.resolve(process.cwd(), `${this.options.srcDir}/assets/`);
+    const staticFolderPaths = path.resolve(process.cwd(), `${this.options.srcDir}/static/`);
 
     const extension = filePath.split('.').pop();
 
     this.nuxt.hook('build:before', async () => {
-      const generatedOutput = await processAssetDir(
-        iconFolderPath,
+      let outObject = `export const ${pathsObjectName} = {`;
+      let interfaceType = 'export type AssetsPaths = ';
+      let generatedOutput = await processAssetDir(
+        assetsFolderPath,
         '~assets/',
         outObject,
+        interfaceType,
         extension
       );
-      console.log(generatedOutput);
+      if (staticPaths) {
+        let staticInterfaceType = 'export type StaticAssetsPaths = ';
+        const staticOutObject = `export const static${capitalize(pathsObjectName)} = {`;
+        const staticGeneratedOutput = await processAssetDir(
+          staticFolderPaths,
+          '/',
+          staticOutObject,
+          staticInterfaceType,
+          extension
+        );
+        generatedOutput += `\n\n${staticGeneratedOutput}`;
+      }
       saveFile(filePath, generatedOutput);
     });
   } catch (e) {
