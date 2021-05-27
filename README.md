@@ -1,4 +1,4 @@
-# 🚏🌆 Nuxt assets paths
+# 🌆 🖇 Nuxt assets paths
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -11,7 +11,7 @@
 [npm-total-downloads-src]: https://img.shields.io/npm/dt/nuxt-assets-paths.svg
 [npm-downloads-href]: https://www.npmjs.com/package/nuxt-assets-paths
 
-> Generate icon paths objects and Typescript interface for your assets and static files
+## Generate icon paths objects and Typescript interface for your assets and static files
 
 Typescript is recommanded for this module usage
 
