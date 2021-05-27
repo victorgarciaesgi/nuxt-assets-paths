@@ -11,7 +11,7 @@ const assetsPathsModule: Module<NuxtAssetsPathsOptions> = function (moduleOption
     const {
       filePath = `${this.options.srcDir}/__assetsPaths.ts`,
       pathsObjectName = 'assetsPaths',
-      staticPaths = false,
+      staticPaths = true,
     }: NuxtAssetsPathsOptions = { ...this.options.assetsPaths, ...moduleOptions };
 
     const assetsFolderPath = path.resolve(process.cwd(), `${this.options.srcDir}/assets/`);

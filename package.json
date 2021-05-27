@@ -1,6 +1,6 @@
 {
   "name": "nuxt-assets-paths",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Autocomplete for nuxt assets, icons and images paths",
   "main": "lib/module.js",
   "keywords": [

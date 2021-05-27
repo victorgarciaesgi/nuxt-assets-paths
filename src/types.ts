@@ -13,6 +13,6 @@ export interface NuxtAssetsPathsOptions {
 
   /**
    * Enables static files paths generation
-   * @default false */
+   * @default true */
   staticPaths?: boolean;
 }
