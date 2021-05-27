@@ -28,7 +28,7 @@ npm install -D nuxt-assets-paths
 
 First, register the module in the `nuxt.config.[js|ts]`
 
-```javascript
+```js
 const config = {
   ...,
   modules: [
@@ -39,7 +39,7 @@ const config = {
 
 In your nuxt.config
 
-```javascript
+```js
 import 'nuxt-assets-paths';
 
 export default {
@@ -70,6 +70,18 @@ export interface NuxtAssetsPathsOptions {
    * @default true */
   staticPaths?: boolean;
 }
+```
+
+Exemple:
+
+```javascript
+import 'nuxt-assets-paths';
+
+export default {
+  assetsPaths: {
+    filePath: 'src/models/__assetsPaths.ts',
+  },
+};
 ```
 
 # Usage in Vue/Nuxt
