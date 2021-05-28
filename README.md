@@ -15,6 +15,8 @@
 
 Typescript is recommanded for this module usage
 
+You can also check [nuxt-typed-router](https://github.com/victorgarciaesgi/nuxt-typed-router) for route names autocomplete
+
 # Installation
 
 ```bash
