@@ -19,7 +19,7 @@ const assetsPathsModule: Module<NuxtAssetsPathsOptions> = function (moduleOption
 
     const extension = filePath.split('.').pop();
 
-    this.nuxt.hook('build:before', async () => {
+    this.nuxt.hook('build:compile', async () => {
       let outObject = `export const ${pathsObjectName} = {`;
       let interfaceType = 'export type AssetsPaths = ';
       let generatedOutput = await processAssetDir(
